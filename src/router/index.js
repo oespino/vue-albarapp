@@ -14,6 +14,11 @@ export default new Router({
         path: "/customer/",
         component: () => import("@/views/Customer"),
         name: "Clientes"
+      },
+      {
+        path: "/new-customer/",
+        component: () => import("@/views/NewCustomer"),
+        name: "Nuevo cliente"
       }
     ]
 });
