@@ -2,7 +2,7 @@
   <v-app>
     <v-content>
       <WebHeader v-bind:currentState="currentRouteName"/>
-      <router-view></router-view>
+      <router-view class="pb-9"></router-view>
       <WebFooter/>
     </v-content>
   </v-app>

@@ -13,9 +13,9 @@
 
         <v-text-field v-model="idn" :rules="idnRules" label="NIF *" required></v-text-field>
 
-        <v-text-field v-model="address" :rules="addressRules" label="Dirección"></v-text-field>
+        <v-text-field v-model="address" :counter="200" :rules="addressRules" label="Dirección"></v-text-field>
 
-        <v-text-field v-model="province" :rules="provinceRules" label="Provincia"></v-text-field>
+        <v-text-field v-model="province" :counter="20" :rules="provinceRules" label="Provincia"></v-text-field>
 
         <v-text-field v-model="telephone" type="number" :counter="15" :rules="telephoneRules" label="Teléfono"></v-text-field>
 
@@ -84,9 +84,6 @@ export default {
     },
     reset() {
       this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
     }
   }
 };
