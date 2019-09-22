@@ -8,26 +8,8 @@
           </v-btn>
         </v-flex>
       </v-layout>
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="text-left">Código</th>
-              <th class="text-left">Alias</th>
-              <th class="text-left">Nombre</th>
-              <th class="text-left">NIF</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in customers" :key="item.id">
-              <td>{{ item.code }}</td>
-              <td>{{ item.alias }}</td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.idn }}</td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
+      <v-data-table :loading="!customers || customers.length == 0" loading-text="Cargando... Por favor, espere" :headers="headers" :items="customers" :items-per-page="15">
+      </v-data-table>
       <v-layout text-center wrap class="pt-10">
         <v-flex xs12>
           <v-btn to="/">
@@ -44,7 +26,13 @@ export default {
   name: "customer",
   data: () => {
     return {
-      customers: []
+      customers: [],
+      headers: [
+          {text: "Código", sortable: false, value: "code"},
+          {text: "Alias", sortable: false, value: "alias"},
+          {text: "Nombre", sortable: false, value: "name"},
+          {text: "NIF", sortable: false, value: "idn"}
+      ]
     };
   },
   created() {
@@ -53,10 +41,10 @@ export default {
   methods: {
     listCustomers() {
       // Rest call to list clients
-      this.customers = [
-        { id: 1, code: 1, alias: "CLI1", name: "Cliente 1", idn: "E12434545" },
-        { id: 2, code: 2, alias: "CLI2", name: "Cliente 2", idn: "M37457357" }
-      ];
+      setTimeout(() => this.customers = [
+                { id: 1, code: 1, alias: "CLI1", name: "Cliente 1", idn: "E12434545" },
+                { id: 2, code: 2, alias: "CLI2", name: "Cliente 2", idn: "M37457357" }
+      ], 1000);
     }
   }
 };
