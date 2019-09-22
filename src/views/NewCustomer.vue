@@ -36,7 +36,12 @@
         <v-divider></v-divider>
 
         <v-subheader class="title ml-1">Precios de productos</v-subheader>
-
+        <v-row class="ml-5" justify="center">
+          <v-alert
+            v-if="sameProduct()"
+            type="error"
+          >No puedes introducir dos precios para el mismo producto.</v-alert>
+        </v-row>
         <v-row class="ml-5" justify="center">
           <v-col cols="12" md="3">
             <v-select
@@ -52,10 +57,9 @@
             <v-text-field v-model="price" type="number" label="Precio" suffix="€"></v-text-field>
           </v-col>
           <v-col cols="12" md="1" align-self="center">
-            <v-btn :disabled="!price || !product" @click="addPrice">Añadir</v-btn>
+            <v-btn :disabled="!price || !product || sameProduct()" @click="addPrice">Añadir</v-btn>
           </v-col>
         </v-row>
-
         <v-row class="ml-5" justify="center">
           <v-col cols="12" md="5">
             <v-simple-table>
@@ -166,13 +170,21 @@ export default {
       );
     },
     addPrice() {
-        var vm = this;
+      var vm = this;
+      if (!this.sameProduct()) {
         this.productPrices.push({
-            product: vm.product,
-            price: vm.price
+          product: vm.product,
+          price: vm.price
         });
         vm.product = undefined;
         vm.price = 0;
+      }
+    },
+    sameProduct() {
+      var vm = this;
+      return vm.product && vm.productPrices.some(
+        product => product.product.id === vm.product.id
+      );
     }
   }
 };
