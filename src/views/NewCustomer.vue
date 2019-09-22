@@ -152,6 +152,7 @@ export default {
     },
     reset() {
       this.$refs.form.reset();
+      this.productPrices = [];
     },
     listProducts() {
       // Rest call to list products
@@ -169,7 +170,9 @@ export default {
         this.productPrices.push({
             product: vm.product,
             price: vm.price
-        })
+        });
+        vm.product = undefined;
+        vm.price = 0;
     }
   }
 };
