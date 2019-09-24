@@ -152,6 +152,25 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         // Rest call to create new customer
+        var customer = {
+          "fiscalId": this.idn,
+          "code": this.code,
+          "name": this.name,
+          "alias": this.alias,
+          "phoneNumber": this.telephone,
+          "email": this.email,
+          "address": this.address,
+          "province": this.province,
+        }
+        this.$axios
+        .post('/customers', customer)
+        .then(response => {
+          alert('Se ha creado el cliente correctamente')
+          this.reset()
+        })
+        .catch(function (error) {
+          alert('Ha ocurrido un error creando el cliente')
+        })
       }
     },
     reset() {
@@ -160,14 +179,14 @@ export default {
     },
     listProducts() {
       // Rest call to list products
-      setTimeout(
-        () =>
-          (this.products = [
-            { id: 1, name: "Producto 1" },
-            { id: 2, name: "Producto 2" }
-          ]),
-        1000
-      );
+      this.$axios
+      .get('/products')
+      .then(response => {
+        this.products = response.data._embedded.products 
+      })
+      .catch(function (error) {
+        alert('Ha ocurrido un error recuperando los productos')
+      })
     },
     addPrice() {
       var vm = this;

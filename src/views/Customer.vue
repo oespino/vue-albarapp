@@ -31,7 +31,11 @@ export default {
           {text: "Código", sortable: false, value: "code"},
           {text: "Alias", sortable: false, value: "alias"},
           {text: "Nombre", sortable: false, value: "name"},
-          {text: "NIF", sortable: false, value: "idn"}
+          {text: "NIF", sortable: false, value: "fiscalId"},
+          {text: "Teléfono", sortable: false, value: "phoneNumber"},
+          {text: "E-mail", sortable: false, value: "email"},
+          {text: "Dirección", sortable: false, value: "address"},
+          {text: "Provincia", sortable: false, value: "province"}
       ]
     };
   },
@@ -40,11 +44,14 @@ export default {
   },
   methods: {
     listCustomers() {
-      // Rest call to list clients
-      setTimeout(() => this.customers = [
-                { id: 1, code: 1, alias: "CLI1", name: "Cliente 1", idn: "E12434545" },
-                { id: 2, code: 2, alias: "CLI2", name: "Cliente 2", idn: "M37457357" }
-      ], 1000);
+      this.$axios
+        .get('/customers')
+        .then(response => {
+          this.customers = response.data._embedded.customers 
+        })
+        .catch(function (error) {
+          alert('Ha ocurrido un error recuperando los clientes')
+        })
     }
   }
 };
